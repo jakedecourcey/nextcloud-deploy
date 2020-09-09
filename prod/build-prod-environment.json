@@ -1,0 +1,34 @@
+{
+    "variables": {
+        "project_name": "rpg-utilities"
+    },
+
+    "builders": [
+        {
+            "type": "amazon-ebs",
+            "ami_name": "{{user `project_name`}}-prod-image",
+            "force_deregister": "true",
+            "force_delete_snapshot": "true",
+            "instance_type": "t2.nano",
+            "region": "us-east-1",
+            "source_ami_filter": {
+                "filters": {
+                    "image-id": "ami-0affd4508a5d2481b",
+                    "root-device-type": "ebs"
+                },
+                "owners": ["679593333241"],
+                "most_recent": true
+            },
+            "ssh_username": "centos"
+        }
+    ],
+
+    "provisioners": [
+        {
+            "type": "ansible",
+            "playbook_file": "../ansible/deploy.yml",
+            "groups": ["webservers", "dbservers", "prod_webservers", "prod_dbservers"]
+        }
+    ]
+}
+

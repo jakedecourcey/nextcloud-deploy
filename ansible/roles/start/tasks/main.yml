@@ -1,0 +1,17 @@
+---
+# file: roles/start/tasks/main.yml
+
+- name: install node process manager
+  npm:
+    name: pm2
+    state: present
+    global: yes
+  tags:
+    - start
+
+- name: start server as process and enable
+  shell:
+    cmd: pm2 start server.js && pm2 save && pm2 startup
+    chdir: "{{ server_directory }}"
+  tags:
+    - start

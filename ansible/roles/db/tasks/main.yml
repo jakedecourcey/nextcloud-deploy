@@ -1,0 +1,24 @@
+---
+# file: /ansible/roles/tasks/main.yml
+
+- name: install mongodb repo
+  copy:
+    src: mongodb.repo
+    dest: /etc/yum.repos.d/mongodb-org-4.2.repo
+  tags:
+    - mongodb
+
+- name: install required packages
+  yum:
+    name: "{{ db_packages }}"
+    state: present
+  tags:
+    - mongodb
+
+- name: start mongo service
+  service:
+    name: mongod
+    state: started
+    enabled: yes
+  tags:
+    - mongodb

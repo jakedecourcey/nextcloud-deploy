@@ -1,0 +1,12 @@
+---
+# file: roles/rsync/tasks/mail.yml
+
+- name: copy local working directory to dev box
+  synchronize:
+    src: "{{ local_directory }}"
+    dest: "{{ server_directory }}"
+    delete: yes
+    recursive: yes
+  tags:
+    - rsync
+

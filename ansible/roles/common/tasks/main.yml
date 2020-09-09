@@ -1,0 +1,18 @@
+---
+# file: roles/common/tasks/main.yml
+- name: install basic packages
+  yum:
+    name: "{{ basic_packages }}"
+    state: present
+  notify: restart-ntpd
+  tags:
+    - ntp
+    - git
+    - nginx
+
+- name: enable ntp
+  service:
+    name: ntpd
+    state: started
+    enabled: yes
+  tags: ntp

@@ -1,0 +1,9 @@
+---
+# file: role/start/tasks/main.yml
+
+- name: start node server
+  shell:
+    cmd: npm start >> /srv/web/rpg-utilities/log.txt &
+    chdir: "{{ server_directory }}"
+  tags:
+    - node

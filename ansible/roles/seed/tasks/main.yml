@@ -1,0 +1,5 @@
+---
+# file: /ansible/roles/db_dev/tasks/main.yml
+
+- name: seed db with dev data
+  command: "mongoimport --file={{ server_directory }}dev_data.json --db={{ seed_db }} --collection={{ seed_collection }}"
