@@ -4,3 +4,4 @@
   roles:
     - requirements
     - php
+    - nginx

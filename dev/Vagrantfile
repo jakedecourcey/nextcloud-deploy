@@ -11,7 +11,7 @@ Vagrant.configure("2") do |config|
     config.vm.provision "ansible" do |ansible|
         ansible.playbook = "../ansible/deploy.yml"
         ansible.groups = {
-            "nextcloud" => ["dev"],
+            "all" => ["dev"],
         }
     end
 end

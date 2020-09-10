@@ -1,0 +1,35 @@
+---
+# tasks file for nginx
+
+- name: Create group for nginx
+  group:
+    name: nginx
+    system: true
+    state: present
+
+- name: Create the nginx user
+  user:
+    name: nginx
+    group: nginx
+    system: yes
+    createhome: no
+    state: present
+
+- name: remove apache
+  apt:
+    name: apache2
+    state: absent
+    autoremove: yes
+
+- name: Install nginx
+  apt:
+    name: nginx
+    state: present
+
+- name: configure nginx
+  template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/nginx.conf
+    mode: 0640
+    owner: nginx
+
