@@ -4,25 +4,14 @@
 Vagrant.configure("2") do |config|
 
     config.vm.define "dev" do |dev|
-        dev.vm.box = "centos/7"
+        dev.vm.box = "ubuntu/bionic64"
         dev.vm.network "forwarded_port", guest: 80, host: 1234, host_ip: "127.0.0.1"
     end
 
     config.vm.provision "ansible" do |ansible|
         ansible.playbook = "../ansible/deploy.yml"
         ansible.groups = {
-            "webservers" => ["dev"],
-            "dbservers" => ["dev"],
-            "dev_webservers" => ["dev"],
-            "dev_dbservers" => ["dev"]
-        }
-    end
-
-    config.vm.provision "rsync", run: "never", type: "ansible" do |ansible|
-        ansible.playbook = "../ansible/deploy.yml"
-        ansible.tags = "rsync"
-        ansible.groups = {
-            "dev_webservers" => ["dev"]
+            "nextcloud" => ["dev"],
         }
     end
 end
