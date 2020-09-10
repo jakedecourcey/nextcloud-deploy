@@ -1,5 +1,6 @@
 ---
 # file: group_vars/all
+
 ansible_connection: ssh 
 ansible_python_interpreter: auto_silent
 ansible_become: yes
@@ -43,3 +44,7 @@ required_php_modules:
 #- bcmath #(for passwordless login)
 #- gmp #(for passwordless login)
 - imagick #(for image previews)
+
+# nginx variables
+nginx_group: nginx
+nginx_user: nginx

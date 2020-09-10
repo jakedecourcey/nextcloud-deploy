@@ -3,14 +3,14 @@
 
 - name: Create group for nginx
   group:
-    name: nginx
+    name: "{{ nginx_group }}"
     system: true
     state: present
 
 - name: Create the nginx user
   user:
-    name: nginx
-    group: nginx
+    name: "{{ nginx_user }}"
+    group: "{{ nginx_group }}"
     system: yes
     createhome: no
     state: present
