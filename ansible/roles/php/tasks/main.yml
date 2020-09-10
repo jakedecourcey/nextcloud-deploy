@@ -1,0 +1,24 @@
+---
+# tasks file for php
+
+- name: remove wrong version
+  apt:
+    name: php
+    state: absent
+
+- name: Install PHP repo
+  apt_repository:
+    repo: ppa:ondrej/php
+    state: present
+
+- name: Install PHP to correct version
+  apt:
+    #name: "php{{target_php_version}}"
+    name: php7.4
+    state: present
+
+- name: Install necessary PHP modules
+  apt:
+    name: "php{{target_php_version}}-{{item}}"
+    state: latest
+  loop: "{{required_php_modules}}"
