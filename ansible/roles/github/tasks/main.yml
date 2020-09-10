@@ -1,9 +1,0 @@
----
-# file: roles/github/tasks/main.yml
-
-- name: install files from github repo
-  git:
-    repo: "{{ repository }}"
-    dest: "{{ server_directory }}"
-    force: yes
-  tags: git

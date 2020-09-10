@@ -1,0 +1,23 @@
+---
+# tasks file for requirements
+
+- debug: var=ansible_facts
+
+- name: Confirm OS
+  assert: 
+    that:
+      - "distribution == '{{target_os_name}}'"
+      - "distribution_version == '{{target_os_version}}'"
+    fail_msg: "Wrong OS"
+    success_msg: "OS OK"
+
+- name: install generic requirements
+  apt:
+    name: "{{generic_requirements}}"
+    state: present
+
+- name: update all packages
+  apt:
+    update_cache: yes
+    upgrade: dist
+    autoremove: yes

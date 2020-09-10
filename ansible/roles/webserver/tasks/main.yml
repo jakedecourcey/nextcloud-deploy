@@ -1,8 +1,0 @@
----
-# file: roles/webserver/tasks/main.yml
-
-- name: create project directory
-  file:
-    path: "{{ server_directory }}"
-    state: directory
-
