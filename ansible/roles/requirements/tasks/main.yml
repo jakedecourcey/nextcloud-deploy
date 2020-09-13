@@ -11,6 +11,10 @@
     fail_msg: "Wrong OS"
     success_msg: "OS OK"
 
+- name: update apt cache
+  apt:
+    update_cache: yes
+
 - name: install generic requirements
   apt:
     name: "{{generic_requirements}}"
@@ -18,6 +22,5 @@
 
 - name: update all packages
   apt:
-    update_cache: yes
     upgrade: dist
     autoremove: yes

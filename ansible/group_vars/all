@@ -48,3 +48,8 @@ required_php_modules:
 # nginx variables
 nginx_group: nginx
 nginx_user: nginx
+
+# netxloud variables
+nextcloud_version: 19.0.2
+nextcloud_download_url: https://download.nextcloud.com/server/releases/nextcloud-{{ nextcloud_version }}.tar.bz2
+nextcloud_checksum: https://download.nextcloud.com/server/releases/nextcloud-{{ nextcloud_version }}.tar.bz2.sha256

@@ -14,3 +14,16 @@
     system: yes
     createhome: no
     state: present
+
+- name: download package
+  get_url:
+    url:  "{{ nextcloud_download_url }}"
+    dest: /tmp/nextcloud.tar.bz2
+    checksum: "sha256:{{ nextcloud_checksum}}"
+
+- name: install nextcloud
+  unarchive:
+    src: /tmp/nextcloud.tar.bz2
+    dest: /var/www
+    remote_src: true
+    creates: /var/www/nextcloud/occ
