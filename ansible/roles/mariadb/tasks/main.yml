@@ -1,0 +1,50 @@
+---
+# tasks file for mariadb
+
+- name: install PyMySQL
+  pip:
+    name: PyMySQL
+    state: latest
+
+- name: configure mariadb
+  template:
+    src: nextcloud.cnf.j2
+    dest: /etc/mysql/conf.d/nextcloud.cnf
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart mariadb
+
+- name: start and enable MariaDB
+  service:
+    name: mysql
+    state: started
+    enabled: yes
+
+- name: remove anonymous user
+  mysql_user:
+    name: ''
+    host_all: yes
+    state: absent
+    login_unix_socket: "{{ mariadb_socket }}"
+
+- name: remove test db
+  mysql_db:
+    name: test
+    state: absent
+    login_unix_socket: "{{ mariadb_socket }}"
+  
+- name: create nextcloud db
+  mysql_db:
+    name: "{{ nextcloud_database_name }}"
+    collation: utf8mb4_general_ci
+    encoding: utf8mb4
+    login_unix_socket: "{{ mariadb_socket }}"
+
+- name: create nextcloud user
+  mysql_user:
+    name:     "{{ nextcloud_database_user }}"
+    password: "{{ nextcloud_database_pass }}"
+    priv:     "{{ nextcloud_database_name }}.*:ALL"
+    state: present
+    login_unix_socket: "{{ mariadb_socket }}"
