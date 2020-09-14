@@ -16,12 +16,16 @@
     owner: "{{ nginx_user}}"
     group: "{{ nginx_group }}"
 
-- name: make data directory
+- name: make necessary directories directory
   file:
-    path: "{{ nextcloud_data_directory }}"
+    path: "{{ item }}"
     state: directory
     owner: "{{ nginx_user }}"
     group: "{{ nginx_group }}"
+  loop:
+    - "{{ nextcloud_data_directory }}"
+    - "{{ nextcloud_data_directory }}/upload_tmp"
+    - /usr/local/tmp/sessions
 
 - name: perform initial nextcloud setup
   become_user: "{{ nginx_user }}"
