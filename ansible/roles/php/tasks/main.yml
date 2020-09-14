@@ -19,6 +19,18 @@
 
 - name: Install necessary PHP modules
   apt:
-    name: "php{{target_php_version}}-{{item}}"
+    name: "php{{php_version}}-{{item}}"
     state: latest
   loop: "{{required_php_modules}}"
+
+- name: install php configs
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  loop:
+    - { src: 'fpm.php.ini.j2', dest: '/etc/php/{{ php_version }}/fpm/php.ini' }
+    - { src: 'www.conf.j2', dest: '/etc/php/{{ php_version }}/fpm/pool.d/www.conf' }
+    - { src: 'php-fpm.conf.j2', dest: '/etc/php/{{ php_version }}/fpm/php-fpm.conf' }
+    - { src: 'cli.php.ini.j2', dest: '/etc/php/{{ php_version }}/cli/php.ini' }
+    - { src: 'pdo_mysql.ini.j2', dest: '/etc/php/{{ php_version }}/mods-available/pdo_mysql.ini' }
+  notify: restart php-fpm

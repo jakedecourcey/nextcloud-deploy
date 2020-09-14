@@ -20,7 +20,7 @@ generic_requirements:
 - python3-pip
 
 # Expected values for PHP
-target_php_version: 7.4
+php_version: 7.4
 
 required_php_modules:
 # mandatory
