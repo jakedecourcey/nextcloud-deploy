@@ -14,3 +14,28 @@
     remote_src: true
     creates: /var/www/nextcloud/occ
     owner: "{{ nginx_user}}"
+    group: "{{ nginx_group }}"
+
+- name: make data directory
+  file:
+    path: "{{ nextcloud_data_directory }}"
+    state: directory
+    owner: "{{ nginx_user }}"
+    group: "{{ nginx_group }}"
+
+- name: perform initial nextcloud setup
+  become_user: "{{ nginx_user }}"
+  become_flags: "{{ ansible_become_flags | default(omit) }}"
+  become: yes
+  shell: >
+    php occ  maintenance:install 
+    --database mysql
+    --database-name {{ nextcloud_database_name }} 
+    --database-user {{ nextcloud_database_user }} 
+    --database-pass {{ nextcloud_database_pass }} 
+    --admin-user {{ nextcloud_admin_user }} 
+    --admin-pass {{ nextcloud_admin_pass }} 
+    --data-dir {{ nextcloud_data_directory }}
+  args:
+    chdir: /var/www/nextcloud/
+    creates: /var/www/nextcloud/config/config.php
