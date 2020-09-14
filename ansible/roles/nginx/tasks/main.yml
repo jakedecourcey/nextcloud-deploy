@@ -17,8 +17,9 @@
 
 - name: remove apache
   apt:
-    name: apache2
+    name: apache2*
     state: absent
+    purge: yes
     autoremove: yes
 
 - name: Install nginx
@@ -31,5 +32,17 @@
     src: nginx.conf.j2
     dest: /etc/nginx/nginx.conf
     mode: 0640
-    owner: nginx
+    owner: "{{ nginx_user }}"
+    group: "{{ nginx_group }}"
 
+- name: additional nginx configs
+  template:
+    src: "{{ item }}.j2"
+    dest: "/etc/nginx/conf.d/{{ item }}"
+  loop:
+    - nextcloud.conf
+    - header.conf
+    - proxy.conf
+    - optimization.conf
+    - php_optimization.conf
+    - ssl.conf

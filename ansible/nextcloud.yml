@@ -1,0 +1,9 @@
+---
+hosts: all
+tasks:
+
+  - name: import predeploy tasks
+    import_playbook: predeploy.yml
+
+  - name: import deploy tasks
+    import_playbook: deploy.yml

@@ -1,0 +1,27 @@
+---
+# tasks file for ssl
+
+- name: create fake certificate directory
+  file:
+    dest: /etc/nginx/certs
+    owner: root
+    group: root
+    mode: 0755
+    state: directory
+
+- name: generate an openssl private key with the default values
+  openssl_privatekey:
+    path: /etc/nginx/certs/key.pem
+
+- name: generate an openssl certificate signing request
+  openssl_csr:
+    path: /etc/nginx/certs/cert.csr
+    privatekey_path: /etc/nginx/certs/key.pem
+    common_name: "{{ fqdn }}"
+
+- name: Generate a Self Signed OpenSSL certificate
+  openssl_certificate:
+    path: /etc/nginx/certs/cert.pem
+    privatekey_path: /etc/nginx/certs/key.pem
+    csr_path: /etc/nginx/certs/cert.csr
+    provider: selfsigned
