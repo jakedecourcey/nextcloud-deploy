@@ -17,7 +17,7 @@
   openssl_csr:
     path: /etc/nginx/certs/cert.csr
     privatekey_path: /etc/nginx/certs/key.pem
-    common_name: "{{ fqdn }}"
+    common_name: "{{ nextcloud_domain }}"
 
 - name: Generate a Self Signed OpenSSL certificate
   openssl_certificate:

@@ -1,8 +1,8 @@
 ---
 
-- hosts: all
-  roles:
-    - requirements
-    - php
-    - ssl
-    - nginx
+roles:
+  - requirements
+  - php
+  - ssl
+  - nginx
+  - nextcloud

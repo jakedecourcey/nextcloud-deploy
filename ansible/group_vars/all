@@ -5,6 +5,9 @@ ansible_connection: ssh
 ansible_python_interpreter: auto_silent
 ansible_become: yes
 
+# Fully Qualified Domain Name
+nextcloud_domain:
+
 # Expected values for starting state
 target_os_name: Ubuntu
 target_os_version: 18.04

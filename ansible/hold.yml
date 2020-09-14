@@ -1,0 +1,9 @@
+---
+- hosts: all
+  tasks:
+
+  - name: import predeploy tasks
+    include:  predeploy.yml
+
+  - name: import deploy tasks
+    include: deploy.yml

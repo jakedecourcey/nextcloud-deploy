@@ -34,6 +34,7 @@
     mode: 0640
     owner: "{{ nginx_user }}"
     group: "{{ nginx_group }}"
+  notify: restart nginx
 
 - name: additional nginx configs
   template:
@@ -46,3 +47,11 @@
     - optimization.conf
     - php_optimization.conf
     - ssl.conf
+  notify: restart nginx
+
+- name: give correct permissions to php socket
+  file:
+    path: /run/php/php7.4-fpm.sock
+    owner: "{{ nginx_user }}"
+    group: "{{ nginx_group }}"
+  notify: restart nginx

@@ -1,20 +1,6 @@
 ---
 # tasks file for nextcloud
 
-- name: Create the nextcloud group
-  group:
-    name: nextcloud
-    system: true
-    state: present
-
-- name: Create the nextcloud user
-  user:
-    name: nextcloud
-    group: nextcloud
-    system: yes
-    createhome: no
-    state: present
-
 - name: download package
   get_url:
     url:  "{{ nextcloud_download_url }}"
@@ -27,3 +13,4 @@
     dest: /var/www
     remote_src: true
     creates: /var/www/nextcloud/occ
+    owner: "{{ nginx_user}}"

@@ -1,9 +1,14 @@
 ---
-hosts: all
-tasks:
 
-  - name: import predeploy tasks
-    import_playbook: predeploy.yml
+- hosts: all
+  tasks: 
 
-  - name: import deploy tasks
-    import_playbook: deploy.yml
+  - name: import all roles
+    include_role:
+      name: "{{ item }}"
+    loop:
+      - requirements
+      - php
+      - ssl
+      - nginx
+      - nextcloud
