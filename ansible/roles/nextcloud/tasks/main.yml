@@ -38,7 +38,7 @@
     --database-user {{ nextcloud_database_user }} 
     --database-pass {{ nextcloud_database_pass }} 
     --admin-user {{ nextcloud_admin_user }} 
-    --admin-pass {{ nextcloud_admin_pass }} 
+    --admin-pass '{{ nextcloud_admin_pass }}'
     --data-dir {{ nextcloud_data_directory }}
   args:
     chdir: /var/www/nextcloud/
