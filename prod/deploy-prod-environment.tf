@@ -15,7 +15,7 @@ data "aws_ami" "prod-image" {
 data "aws_eip" "prod-ip" {
   filter {
     name   = "tag:Name"
-    values = ["${var.project_name}-prod"]
+    values = ["${var.project_name}"]
   }
 }
 
@@ -52,7 +52,7 @@ resource "aws_security_group" "default" {
 }
 
 resource "aws_instance" "prod-instance" {
-    instance_type   = "t2.nano"
+    instance_type   = "t3a.nano"
     ami             = data.aws_ami.prod-image.id
     vpc_security_group_ids = ["${aws_security_group.default.id}"]
     tags = {

@@ -1,6 +1,6 @@
 {
     "variables": {
-        "project_name": "rpg-utilities"
+        "project_name": "nextcloud"
     },
 
     "builders": [
@@ -9,25 +9,25 @@
             "ami_name": "{{user `project_name`}}-prod-image",
             "force_deregister": "true",
             "force_delete_snapshot": "true",
-            "instance_type": "t2.nano",
+            "instance_type": "t3a.nano",
             "region": "us-east-1",
             "source_ami_filter": {
                 "filters": {
-                    "image-id": "ami-0affd4508a5d2481b",
+                    "image-id": "ami-0817d428a6fb68645",
                     "root-device-type": "ebs"
                 },
-                "owners": ["679593333241"],
+                "owners": ["099720109477"],
                 "most_recent": true
             },
-            "ssh_username": "centos"
+            "ssh_username": "ubuntu"
         }
     ],
 
     "provisioners": [
         {
             "type": "ansible",
-            "playbook_file": "../ansible/deploy.yml",
-            "groups": ["webservers", "dbservers", "prod_webservers", "prod_dbservers"]
+            "playbook_file": "../ansible/nextcloud.yml",
+            "groups": ["all"]
         }
     ]
 }
