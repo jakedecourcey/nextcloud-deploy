@@ -13,11 +13,18 @@ data "aws_ami" "test-image" {
 }
 
 resource "aws_security_group" "default" {
-    name            = "test_web_server"
+    name            = "test_${var.project_name}"
     
     ingress {
         from_port   = 80
         to_port     = 80
+        protocol    = "tcp"
+        cidr_blocks = ["0.0.0.0/0"]
+      }
+
+    ingress {
+        from_port   = 443
+        to_port     = 443
         protocol    = "tcp"
         cidr_blocks = ["0.0.0.0/0"]
       }
@@ -45,7 +52,7 @@ resource "aws_security_group" "default" {
 }
 
 resource "aws_instance" "test-instance" {
-    instance_type   = "t2.nano"
+    instance_type   = "t3a.nano"
     ami             = data.aws_ami.test-image.id
     vpc_security_group_ids = ["${aws_security_group.default.id}"]
     tags = {
