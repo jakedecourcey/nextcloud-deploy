@@ -19,6 +19,8 @@
 - name: update apt cache
   apt:
     update_cache: yes
+  retries: 3
+  delay: 3
 
 - name: install generic requirements
   apt:

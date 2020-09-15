@@ -48,6 +48,6 @@
   become_user: "{{ nginx_user }}"
   become_flags: "{{ ansible_become_flags | default(omit) }}"
   become: yes
-  shell: php occ config:system:set "trusted_domains" '1 --value={{ trusted_domain }}'
+  shell: "php occ config:system:set trusted_domains 1 --value='{{ trusted_domain }}'"
   args:
     chdir: /var/www/nextcloud/

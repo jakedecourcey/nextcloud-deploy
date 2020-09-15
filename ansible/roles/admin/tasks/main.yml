@@ -1,0 +1,22 @@
+---
+# tasks file for admin
+
+- name: create user
+  user:
+    name: nextcloud
+    group: admin
+
+- name: ensure passwordless sudo
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: '^%admin'
+    line: '%admin ALL=(ALL) NOPASSWD: ALL'
+    validate: 'visudo -cf %s'
+
+- name: load ssh keys
+  authorized_key:
+    user: nextcloud
+    state: present
+    key: "{{ lookup('file', '/home/jacob/.ssh/nextcloud-key.pub') }}"
+
