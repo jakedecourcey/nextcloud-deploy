@@ -30,6 +30,13 @@ resource "aws_security_group" "default" {
       }
 
     ingress {
+        from_port   = 443
+        to_port     = 443
+        protocol    = "tcp"
+        cidr_blocks = ["0.0.0.0/0"]
+      }
+
+    ingress {
         from_port   = 22
         to_port     = 22
         protocol    = "tcp"
@@ -52,7 +59,7 @@ resource "aws_security_group" "default" {
 }
 
 resource "aws_instance" "prod-instance" {
-    instance_type   = "t3a.nano"
+    instance_type   = "t2.nano"
     ami             = data.aws_ami.prod-image.id
     vpc_security_group_ids = ["${aws_security_group.default.id}"]
     tags = {
