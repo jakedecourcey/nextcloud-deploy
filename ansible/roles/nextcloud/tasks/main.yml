@@ -43,3 +43,11 @@
   args:
     chdir: /var/www/nextcloud/
     creates: /var/www/nextcloud/config/config.php
+
+- name: set additional nextcloud config.php values
+  become_user: "{{ nginx_user }}"
+  become_flags: "{{ ansible_become_flags | default(omit) }}"
+  become: yes
+  shell: php occ config:system:set "trusted_domains" '1 --value={{ trusted_domain }}'
+  args:
+    chdir: /var/www/nextcloud/

@@ -68,3 +68,4 @@ nextcloud_database_pass: admin
 nextcloud_admin_user: admin
 nextcloud_admin_pass: admin
 nextcloud_data_directory: /srv/nextcloud
+trusted_domain: "{{ nextcloud_domain }}"
