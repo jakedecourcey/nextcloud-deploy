@@ -27,7 +27,8 @@
         {
             "type": "ansible",
             "playbook_file": "../ansible/nextcloud.yml",
-            "groups": ["all"]
+            "groups": ["all"],
+            "extra_arguments": [ "--extra-vars", "nextcloud_domain=_"]
         }
     ]
 }

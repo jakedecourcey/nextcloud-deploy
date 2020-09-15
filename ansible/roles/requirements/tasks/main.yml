@@ -11,6 +11,11 @@
     fail_msg: "Wrong OS"
     success_msg: "OS OK"
 
+- name: add required apt repo
+  apt_repository:
+    repo: deb http://archive.ubuntu.com/ubuntu bionic main restricted
+    state: present
+
 - name: update apt cache
   apt:
     update_cache: yes

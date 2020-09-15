@@ -6,7 +6,7 @@ ansible_python_interpreter: auto_silent
 ansible_become: yes
 
 # Fully Qualified Domain Name
-nextcloud_domain:
+nextcloud_domain: nextcloud.jakedecourcey.com
 
 # Expected values for starting state
 target_os_name: Ubuntu
@@ -19,8 +19,9 @@ generic_requirements:
 - mariadb-server
 - python3-pip
 
-# Expected values for PHP
+# PHP variables
 php_version: 7.4
+php_config_directory: /etc/php/{{ php_version }}/
 
 required_php_modules:
 # mandatory
