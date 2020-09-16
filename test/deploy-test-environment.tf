@@ -52,7 +52,7 @@ resource "aws_security_group" "default" {
 }
 
 resource "aws_instance" "test-instance" {
-    instance_type   = "t2.nano"
+    instance_type   = "t2.micro"
     ami             = data.aws_ami.test-image.id
     vpc_security_group_ids = ["${aws_security_group.default.id}"]
     tags = {
