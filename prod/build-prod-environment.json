@@ -9,7 +9,7 @@
             "ami_name": "{{user `project_name`}}-prod-image",
             "force_deregister": "true",
             "force_delete_snapshot": "true",
-            "instance_type": "t2.nano",
+            "instance_type": "t2.micro",
             "region": "us-east-1",
             "source_ami_filter": {
                 "filters": {
