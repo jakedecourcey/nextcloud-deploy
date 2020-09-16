@@ -51,3 +51,47 @@
   shell: "php occ config:system:set trusted_domains 1 --value='{{ trusted_domain }}'"
   args:
     chdir: /var/www/nextcloud/
+
+- name: Install news app
+  become_user: "{{ nginx_user }}"
+  become_flags: "{{ ansible_become_flags | default(omit) }}"
+  become: yes
+  shell: php occ app:install news
+  args:
+    chdir: /var/www/nextcloud/
+
+- name: backup jobs, upgrade apps and database tuning
+  become_user: "{{ nginx_user }}"
+  become_flags: "{{ ansible_become_flags | default(omit) }}"
+  become: yes
+  shell: php occ {{ item }}
+  args:
+    chdir: /var/www/nextcloud/
+  loop:
+    - background:cron
+    - upgrade
+    - db:add-missing-indices
+    - db:convert-filecache-bigint
+    
+- name: upgrade nextcloud
+  become_user: "{{ nginx_user }}"
+  become_flags: "{{ ansible_become_flags | default(omit) }}"
+  become: yes
+  shell: php occ upgrade
+  args:
+    chdir: /var/www/nextcloud/
+
+- name: add nextcloud cronjob
+  cron:
+    name: nextcloud cronjob
+    minute: '*/15'
+    user: "{{ nginx_user }}"
+    job: "php -f /var/www/nextcloud/cron.php > /dev/null 2>&1"
+  
+- name: run nextcloud cronjob
+  become_user: "{{ nginx_user }}"
+  become_flags: "{{ ansible_become_flags | default(omit) }}"
+  become: yes
+  shell: php -f /var/www/nextcloud/cron.php
+  args:
+    chdir: /var/www/nextcloud/
